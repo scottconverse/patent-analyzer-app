@@ -1,0 +1,373 @@
+<Window x:Class="PatentAnalyzer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        Title="Patent Analyzer — AI-Powered Patent Feasibility Tool"
+        Width="1400" Height="900" MinWidth="1000" MinHeight="700"
+        Background="{StaticResource BgDarkBrush}"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!-- Left sidebar: stage progress -->
+            <ColumnDefinition Width="280"/>
+            <!-- Main content area -->
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ===== LEFT SIDEBAR ===== -->
+        <Border Grid.Column="0" Background="{StaticResource BgSidebarBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
+            <DockPanel>
+                <!-- Header -->
+                <StackPanel DockPanel.Dock="Top" Margin="20,20,20,0">
+                    <TextBlock Text="⚖️ Patent Analyzer" FontSize="20" FontWeight="Bold"
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                    <TextBlock Text="AI-Powered Feasibility Analysis" FontSize="11"
+                               Foreground="{StaticResource TextDimBrush}" Margin="0,4,0,0"/>
+                    <Separator Background="{StaticResource BorderBrush}" Margin="0,16,0,0"/>
+                </StackPanel>
+
+                <!-- Bottom buttons -->
+                <StackPanel DockPanel.Dock="Bottom" Margin="20,0,20,20">
+                    <Separator Background="{StaticResource BorderBrush}" Margin="0,0,0,12"/>
+                    <Button x:Name="BtnNewAnalysis" Content="🔄  New Analysis"
+                            Click="BtnNewAnalysis_Click" HorizontalAlignment="Stretch"
+                            Background="#2E7D32" Foreground="White"
+                            FontSize="14" FontWeight="Bold"
+                            Padding="12,10" Cursor="Hand" BorderThickness="0"
+                            Visibility="Collapsed">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                        CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bd" Property="Background" Value="#388E3C"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button x:Name="BtnSettings" Content="⚙  Settings" Style="{StaticResource SecondaryButton}"
+                            Click="BtnSettings_Click" HorizontalAlignment="Stretch" Margin="0,8,0,0"/>
+                    <Button x:Name="BtnOpenOutput" Content="📂  Open Output Folder" Style="{StaticResource SecondaryButton}"
+                            Click="BtnOpenOutput_Click" HorizontalAlignment="Stretch" Margin="0,8,0,0"/>
+                </StackPanel>
+
+                <!-- Stage Progress List -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,16,0,0">
+                    <StackPanel x:Name="StagePanel" Margin="20,0">
+                        <TextBlock Text="ANALYSIS STAGES" FontSize="11" FontWeight="Bold"
+                                   Foreground="{StaticResource TextDimBrush}" Margin="0,0,0,12"/>
+
+                        <!-- Stage items are generated in code-behind -->
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+
+        <!-- ===== MAIN CONTENT AREA ===== -->
+        <Grid Grid.Column="1">
+            <!-- TabControl for Input / Output views -->
+            <TabControl x:Name="MainTabs" Background="Transparent" BorderThickness="0"
+                        Margin="0" Padding="0">
+
+                <!-- Override TabControl chrome -->
+                <TabControl.Resources>
+                    <Style TargetType="TabItem">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="{StaticResource TextDimBrush}"/>
+                        <Setter Property="FontSize" Value="13"/>
+                        <Setter Property="FontWeight" Value="Medium"/>
+                        <Setter Property="Padding" Value="16,10"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TabItem">
+                                    <Border x:Name="tabBorder" Padding="{TemplateBinding Padding}"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent" BorderThickness="0,0,0,2">
+                                        <ContentPresenter ContentSource="Header"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="tabBorder" Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
+
+                <!-- ===== TAB 1: INVENTION INPUT ===== -->
+                <TabItem Header="📝  Describe Your Invention">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel Margin="30,20,30,30" MaxWidth="800">
+
+                            <TextBlock Text="Describe your invention in as much detail as you can."
+                                       Foreground="{StaticResource TextPrimaryBrush}" FontSize="18"
+                                       FontWeight="SemiBold"
+                                       TextWrapping="Wrap" Margin="0,0,0,10"/>
+                            <TextBlock Text="You can start with just a Title and Description — the AI will work with whatever you give it. The more detail you add, the deeper the analysis. Don't worry about legal language — just describe what it does and how."
+                                       Foreground="{StaticResource TextSecondaryBrush}" FontSize="14"
+                                       TextWrapping="Wrap" Margin="0,0,0,20"
+                                       LineHeight="22"/>
+
+                            <!-- Invention Title -->
+                            <TextBlock Text="INVENTION TITLE *" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtTitle" Style="{StaticResource InputTextBox}"
+                                     AutomationProperties.Name="Invention Title"
+                                     AcceptsReturn="False" Height="36"
+                                     Tag="Give it a short, descriptive name — e.g. 'AI-Powered Defect Detection for 3D Printed Parts' or 'Smart Irrigation Controller with Weather Prediction'"/>
+
+                            <!-- Description -->
+                            <TextBlock Text="DESCRIPTION *" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtDescription" Style="{StaticResource InputTextBox}"
+                                     AutomationProperties.Name="Description"
+                                     Height="100"
+                                     Tag="Explain your invention like you're telling a friend over coffee. What does it do? Who uses it? Example: 'My system uses a camera mounted on a 3D printer to watch each layer as it prints. An AI model I trained analyzes the images in real time and can detect defects like warping or under-extrusion before they ruin the whole print. It automatically adjusts print settings mid-job to fix the problem.'"/>
+
+                            <!-- Problem Solved -->
+                            <TextBlock Text="PROBLEM IT SOLVES" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtProblem" Style="{StaticResource InputTextBox}"
+                                     AutomationProperties.Name="Problem It Solves"
+                                     Height="80"
+                                     Tag="What frustration, inefficiency, or gap does your invention address? Who has this problem today and how bad is it? Example: '3D prints fail 20-30% of the time, wasting hours of print time and expensive materials. Users don't know a print has failed until they come back hours later to find spaghetti. There's no affordable real-time quality control for desktop 3D printers.'"/>
+
+                            <!-- How It Works -->
+                            <TextBlock Text="HOW IT WORKS — be as technical as you can" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtHowItWorks" Style="{StaticResource InputTextBox}"
+                                     AutomationProperties.Name="How It Works"
+                                     Height="130"
+                                     Tag="Walk through how it actually works, step by step. Think about: What are the main components? How do they connect? What data flows between them? Don't worry about using the 'right' technical language — just describe the mechanism. Example: 'A Raspberry Pi with a camera captures an image after each layer. The image is cropped to just the print area using the known bed coordinates. A lightweight CNN model (trained on 50,000 labeled images of good and bad layers) classifies each layer as OK, warning, or failure. If it detects a problem, it sends a G-code command to pause, adjust temperature or speed, and retry. All this happens in under 2 seconds per layer.'"/>
+
+                            <!-- AI Components -->
+                            <TextBlock Text="AI / MACHINE LEARNING COMPONENTS" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtAI" Style="{StaticResource InputTextBox}"
+                                     AutomationProperties.Name="AI and Machine Learning Components"
+                                     Height="100"
+                                     Tag="If your invention uses AI or machine learning, describe the specifics here. The more detail the better — this is where patents live or die. Think about: What kind of model? What data trains it? How does it make decisions? What makes YOUR approach different from standard ML? Example: 'I use a custom MobileNet-based CNN with a modified attention layer that focuses on edge regions where defects typically start. Training data comes from a dataset I built by deliberately causing failures. The model runs on-device (Raspberry Pi) using TensorFlow Lite at 15fps. The key innovation is a confidence-weighted feedback loop — the model's uncertainty score controls how aggressively it adjusts print parameters.' Leave blank if no AI involved."/>
+
+                            <!-- 3D Print Components -->
+                            <TextBlock Text="3D PRINTING / PHYSICAL DESIGN COMPONENTS" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtThreeDPrint" Style="{StaticResource InputTextBox}"
+                                     AutomationProperties.Name="3D Printing and Physical Design Components"
+                                     Height="100"
+                                     Tag="If your invention involves 3D printing, physical objects, or manufactured designs, describe the physical aspects. Think about: What's the shape/geometry and why? What materials? What printing process (FDM, SLA, SLS, etc.)? Any special structures like lattices, channels, or interlocking parts? Example: 'The camera mount uses a novel ball-joint design that's 3D printed as a single piece — no assembly needed. It has internal snap-fit channels that route the ribbon cable cleanly. The mount attaches to any standard printer rail using a parametric clip system I designed that adapts to different rail widths.' Leave blank if no 3D printing involved."/>
+
+                            <!-- What Is Novel -->
+                            <TextBlock Text="WHAT YOU BELIEVE IS NOVEL" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtNovel" Style="{StaticResource InputTextBox}"
+                                     AutomationProperties.Name="What You Believe Is Novel"
+                                     Height="90"
+                                     Tag="This is your gut feeling — what's new here? Don't hold back, even if you're not sure. We'll verify it with prior art research. Think about: What did YOU have to figure out that wasn't obvious? What would surprise someone in your field? Example: 'Nobody else does real-time layer-by-layer analysis with closed-loop correction on a $50 computer. Existing solutions just detect failures and stop the print — mine actually fixes the problem mid-print. The specific way I map confidence scores to parameter adjustments is something I developed through months of testing and I haven't seen it anywhere else.'"/>
+
+                            <!-- Current Alternatives -->
+                            <TextBlock Text="CURRENT ALTERNATIVES / WHAT ALREADY EXISTS" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtAlternatives" Style="{StaticResource InputTextBox}"
+                                     AutomationProperties.Name="Current Alternatives"
+                                     Height="80"
+                                     Tag="What do people use today instead? Competing products, open-source tools, research papers, or manual workarounds all count. Be honest — knowing the competition strengthens your patent. Example: 'OctoPrint has plugins like Spaghetti Detective (now Obico) that use AI to detect failures but they only STOP the print, not fix it. They also require cloud processing. Bambu Lab printers have lidar-based first-layer detection but nothing after that. Academic papers from MIT describe in-situ monitoring but require industrial CT scanners costing $500K+.'"/>
+
+                            <!-- What Is Built -->
+                            <TextBlock Text="WHAT HAVE YOU BUILT SO FAR?" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtBuilt" Style="{StaticResource InputTextBox}"
+                                     AutomationProperties.Name="What Have You Built So Far"
+                                     Height="70"
+                                     Tag="Be honest about where you are. A working prototype is great, but even a napkin sketch or a detailed idea has value. This helps us assess §112 (whether there's enough detail to file). Example: 'I have a working prototype running on my Ender 3. The camera and Pi are mounted and the detection model works with about 87% accuracy. The auto-correction part works for temperature and speed but I'm still tuning the retraction adjustments. I have 3 months of test data and about 50,000 training images. No public demos yet.'"/>
+
+                            <!-- What To Protect -->
+                            <TextBlock Text="WHAT DO YOU MOST WANT TO PROTECT?" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtProtect" Style="{StaticResource InputTextBox}"
+                                     AutomationProperties.Name="What Do You Most Want To Protect"
+                                     Height="70"
+                                     Tag="If a competitor wanted to copy ONE thing about your invention, what would hurt most? This helps focus the patent strategy. Example: 'The confidence-to-parameter mapping algorithm is the real secret sauce — that's what makes auto-correction actually work instead of making things worse. I also want to protect the overall system architecture of camera + edge AI + closed-loop G-code control, so nobody else can build this combination even with different components.'"/>
+
+                            <!-- Additional Notes -->
+                            <TextBlock Text="ANYTHING ELSE WE SHOULD KNOW?" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="TxtNotes" Style="{StaticResource InputTextBox}"
+                                     AutomationProperties.Name="Additional Notes"
+                                     Height="70"
+                                     Tag="Budget constraints, timeline pressure, business plans, conversations with investors, public disclosures (blog posts, demos, social media), or anything else that might affect strategy. Example: 'I posted a demo video on YouTube 3 months ago showing the detection part (but not the auto-correction). I'm talking to a 3D printer manufacturer about licensing. Budget is limited — probably can't spend more than $5K on initial filing. I want to file something within 6 months.'"/>
+
+                            <!-- Action Buttons -->
+                            <Grid Margin="0,24,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button x:Name="BtnClear" Grid.Column="0" Content="Clear All"
+                                        Style="{StaticResource SecondaryButton}" Click="BtnClear_Click"
+                                        HorizontalAlignment="Left"/>
+
+                                <Button x:Name="BtnCancel" Grid.Column="1" Content="⏹  STOP"
+                                        Click="BtnCancel_Click"
+                                        Visibility="Collapsed" Margin="0,0,12,0"
+                                        Background="#D32F2F" Foreground="White"
+                                        FontSize="14" FontWeight="Bold"
+                                        Padding="20,12" Cursor="Hand" BorderThickness="0">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                                    CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#EF5350"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+                                <Button x:Name="BtnAnalyze" Grid.Column="2"
+                                        Content="🔬  Run Full Analysis"
+                                        Style="{StaticResource PrimaryButton}"
+                                        Click="BtnAnalyze_Click" FontSize="15"/>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!-- ===== TAB 2: LIVE OUTPUT ===== -->
+                <TabItem Header="📡  Live Analysis Output" x:Name="TabOutput">
+                    <Grid Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Status Bar -->
+                        <Border Grid.Row="0" Background="{StaticResource BgCardBrush}"
+                                Padding="20,10" BorderBrush="{StaticResource BorderBrush}"
+                                BorderThickness="0,0,0,1">
+                            <DockPanel>
+                                <Button x:Name="BtnCancelTop" Content="⏹  STOP ANALYSIS"
+                                        DockPanel.Dock="Right"
+                                        Click="BtnCancel_Click" Visibility="Collapsed"
+                                        Background="#D32F2F" Foreground="White"
+                                        FontSize="13" FontWeight="Bold"
+                                        Padding="16,6" Cursor="Hand"
+                                        BorderThickness="0">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                                    CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="bd" Property="Background" Value="#EF5350"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <TextBlock x:Name="TxtTimer" Text=""
+                                           Foreground="{StaticResource TextDimBrush}"
+                                           FontSize="12" VerticalAlignment="Center"
+                                           DockPanel.Dock="Right" HorizontalAlignment="Right"
+                                           Margin="0,0,16,0"/>
+                                <TextBlock x:Name="TxtStatus" Text="Ready"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           FontSize="13" VerticalAlignment="Center"/>
+                            </DockPanel>
+                        </Border>
+
+                        <!-- Formatted HTML output — updated every 1.5s during streaming -->
+                        <wv2:WebView2 x:Name="BrowserOutput" Grid.Row="1"
+                                      DefaultBackgroundColor="#0D1117"/>
+
+                        <!-- Bottom Action Bar -->
+                        <Border Grid.Row="2" Background="{StaticResource BgCardBrush}"
+                                Padding="20,12" BorderBrush="{StaticResource BorderBrush}"
+                                BorderThickness="0,1,0,0">
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                                    <Button x:Name="BtnSaveReport" Content="💾  Save Report"
+                                            Style="{StaticResource SecondaryButton}"
+                                            Click="BtnSaveReport_Click" IsEnabled="False"
+                                            Margin="0,0,8,0"/>
+                                    <Button x:Name="BtnCopyOutput" Content="📋  Copy Text"
+                                            Style="{StaticResource SecondaryButton}"
+                                            Click="BtnCopyOutput_Click"/>
+                                </StackPanel>
+                                <TextBlock x:Name="TxtOutputInfo" Text=""
+                                           Foreground="{StaticResource TextDimBrush}"
+                                           FontSize="12" VerticalAlignment="Center"/>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                </TabItem>
+
+                <!-- ===== TAB 3: FINAL REPORT ===== -->
+                <TabItem Header="📄  Final Report" x:Name="TabReport">
+                    <Grid Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="{StaticResource BgCardBrush}"
+                                Padding="20,10" BorderBrush="{StaticResource BorderBrush}"
+                                BorderThickness="0,0,0,1">
+                            <DockPanel>
+                                <TextBlock Text="Comprehensive Patent Analysis Report"
+                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           FontSize="16" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="TxtReportPath" Text=""
+                                           Foreground="{StaticResource AccentBrush}"
+                                           FontSize="12" VerticalAlignment="Center"
+                                           DockPanel.Dock="Right" HorizontalAlignment="Right"
+                                           Cursor="Hand" TextDecorations="Underline"
+                                           MouseLeftButtonUp="TxtReportPath_Click"
+                                           ToolTip="Click to open report folder"/>
+                            </DockPanel>
+                        </Border>
+
+                        <!-- Rendered HTML Report -->
+                        <wv2:WebView2 x:Name="BrowserReport" Grid.Row="1"
+                                      DefaultBackgroundColor="#0D1117"/>
+
+                        <Border Grid.Row="2" Background="{StaticResource BgCardBrush}"
+                                Padding="20,12" BorderBrush="{StaticResource BorderBrush}"
+                                BorderThickness="0,1,0,0">
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                                    <Button x:Name="BtnOpenFolder" Content="📂  Open Report Folder"
+                                            Style="{StaticResource SecondaryButton}"
+                                            Click="BtnOpenFolder_Click" IsEnabled="False"
+                                            Margin="0,0,8,0"/>
+                                    <Button x:Name="BtnOpenHtml" Content="🌐  Open in Browser"
+                                            Style="{StaticResource SecondaryButton}"
+                                            Click="BtnOpenHtml_Click" IsEnabled="False"
+                                            Margin="0,0,8,0"/>
+                                    <Button x:Name="BtnCopyReport" Content="📋  Copy Text"
+                                            Style="{StaticResource SecondaryButton}"
+                                            Click="BtnCopyReport_Click"/>
+                                </StackPanel>
+                                <TextBlock x:Name="TxtReportInfo" Text=""
+                                           Foreground="{StaticResource TextDimBrush}"
+                                           FontSize="12" VerticalAlignment="Center"/>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Window>

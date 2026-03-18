@@ -1,0 +1,24 @@
+## Build output
+bin/
+obj/
+publish/
+
+## Distribution
+*.zip
+
+## User settings (contains API key)
+config.json
+
+## IDE
+.vs/
+*.user
+*.suo
+
+## Debug symbols
+*.pdb
+
+## Nested repos (has its own GitHub repo)
+PA prompt system/
+
+## Release builds
+releases/
