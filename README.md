@@ -30,31 +30,23 @@ You describe your invention. The app runs 6 analysis stages automatically, one a
 ### Prerequisites
 
 - **Windows 10/11** (64-bit)
-- **.NET 8 SDK** — [Download here](https://dotnet.microsoft.com/download/dotnet/8.0)
 - **Anthropic API Key** — [Get one here](https://console.anthropic.com/)
 
-### Build & Run
+That's it. The app is a self-contained single-file executable — no .NET runtime or SDK installation required.
 
-```bash
-# Clone or navigate to the project
-cd PatentAnalyzer
+### Download & Run
 
-# Restore packages and build
-dotnet build
-
-# Run the app
-dotnet run --project PatentAnalyzer
-```
+1. Download `PatentAnalyzer.exe` from the [latest release](https://github.com/scottconverse/patent-analyzer-app/releases)
+2. Run it — no installer needed
 
 ### First Launch
 
-1. The app will open a Settings dialog on first run
-2. Enter your Anthropic API key
-3. Choose your model (Haiku is the default and works great)
-4. Click **Save Settings**
-5. Describe your invention in the input form
-6. Click **Run Full Analysis**
-7. Watch the analysis stream in real time across all 6 stages
+1. Enter your Anthropic API key in the Settings tab
+2. Choose your model (Haiku is the default and works great)
+3. Click **Save Settings**
+4. Describe your invention in the Analysis tab
+5. Click **Run Full Analysis**
+6. Watch the analysis stream in real time across all 6 stages
 8. Find your report auto-saved in `Documents\PatentAnalyzer\output\`
 
 ---
