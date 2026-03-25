@@ -8,6 +8,18 @@ A standalone Windows desktop application that takes an invention idea and runs a
 
 ---
 
+> **IMPORTANT LEGAL DISCLAIMER**
+>
+> **This tool does NOT provide legal advice. It is NOT a substitute for a registered patent attorney.** Patent decisions involve complex legal analysis that AI cannot reliably perform. Do not make filing decisions based solely on this tool's output.
+>
+> The analysis produced by this software does not create an attorney-client relationship, does not constitute a formal patentability or freedom-to-operate opinion, and may contain errors, omissions, or hallucinated references. AI-generated patent analysis can be confidently wrong — presenting fabricated patent numbers, outdated case law, or incorrect statutory interpretations as fact.
+>
+> **Always consult a registered patent attorney before making any filing, licensing, or enforcement decisions.**
+>
+> By using this software, you accept full responsibility for any actions taken based on its output. See the [Terms of Service](docs/terms.html) for complete legal terms.
+
+---
+
 ## What It Does
 
 You describe your invention. The app runs 6 analysis stages automatically, one after another, streaming results in real time:
