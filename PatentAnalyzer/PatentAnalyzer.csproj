@@ -9,7 +9,7 @@
     <!-- <ApplicationIcon>patent.ico</ApplicationIcon> -->
     <AssemblyName>PatentAnalyzer</AssemblyName>
     <RootNamespace>PatentAnalyzer</RootNamespace>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Authors>Scott Converse</Authors>
     <Description>AI-Powered Patent Analysis Tool for Inventors</Description>

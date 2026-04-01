@@ -6,7 +6,7 @@
 
 **AI-Powered Patent Feasibility Analysis Tool for Inventors**
 
-**Version 1.1.0** — March 2026
+**Version 1.2.0** — April 2026
 
 A standalone Windows desktop application that takes an invention idea and runs a comprehensive 6-stage patent analysis pipeline using the Anthropic Claude API. Produces a professional report covering prior art, patentability assessment, and IP strategy — with special depth on AI/ML and 3D printing inventions.
 
@@ -20,9 +20,9 @@ You describe your invention. The app runs 6 analysis stages automatically, one a
 |-------|------|-------------|
 | 1 | **Technical Intake** | Restates your idea in precise patent-ready technical language |
 | 2 | **Prior Art Search** | Searches patents, papers, products, and GitHub for existing work (uses web search) |
-| 3 | **Patentability Analysis** | Full §101/§102/§103/§112 analysis with examiner rejection simulation |
+| 3 | **Patentability Analysis** | Full §101/§102/§103/§112 analysis with common examiner concerns in this technology area |
 | 4 | **Deep Dive Analysis** | Specialized deep analysis of the invention's most patentable and riskiest elements |
-| 5 | **IP Strategy** | Filing recommendations, cost estimates, claim directions, trade secret boundaries |
+| 5 | **IP Strategy** | Filing landscape assessment, cost estimates, claim directions, potential blocking IP to discuss with counsel |
 | 6 | **Final Report** | Assembles everything into one comprehensive patent analysis report |
 
 **Output:** A comprehensive Markdown + HTML report saved automatically, plus individual stage outputs.
@@ -155,8 +155,8 @@ The HTML report is styled for professional presentation and printing.
 - Technical restatement in patent-ready language
 - Prior art search across patents, papers, products, and open source
 - Full patentability assessment (§101, §102, §103, §112)
-- Examiner rejection simulation
-- Filing strategy (provisional vs. non-provisional, timing, costs)
+- Common examiner concerns in this technology area
+- Filing landscape assessment (provisional vs. non-provisional, timing, costs)
 - Claim direction recommendations
 - Documentation checklist
 
@@ -176,17 +176,15 @@ The HTML report is styled for professional presentation and printing.
 
 ---
 
-## What's New in v1.1
+## What's New in v1.2
 
-- **WebView2 rendering** — Replaced the legacy IE WebBrowser control with Microsoft Edge WebView2. Modern CSS, proper table rendering, no memory leaks.
-- **Encrypted API key** — Your Anthropic API key is now encrypted at rest using Windows DPAPI. Never stored in plaintext.
-- **Config moved to AppData** — Settings saved to `%LocalAppData%\PatentAnalyzer\` instead of next to the exe. Survives single-file publish. Auto-migrates from v1.0.
-- **DPI awareness** — Per-monitor DPI scaling via `app.manifest`. Crisp rendering on high-DPI displays.
-- **Graceful shutdown** — Closing the window mid-analysis now cancels the pipeline and cleans up all resources.
-- **Input validation** — Warns on extremely long input (50K+ characters) that could exceed API limits.
-- **Accessibility** — All input fields have `AutomationProperties.Name` for screen readers.
-- **API key masking** — Settings dialog uses a PasswordBox instead of a plain text field.
-- **Prompt improvements** — All 7 reliability fixes from the prompt system audit ported to the embedded prompts (web search fallback, URL verification, legal caveats, cost date stamps, input threshold, truncation safeguards).
+- **UPL compliance revisions** — All 6 embedded prompts now position the AI as an "AI-powered research assistant" rather than a "patent attorney" or "patent strategist." Every stage output begins with a mandatory disclaimer.
+- **Softened section titles** — "File or Don't File" is now "Filing Landscape Assessment," "Bottom-Line Recommendation" is now "Overall Landscape Assessment," "Examiner Rejection Simulation" is now "Common Examiner Concerns in This Technology Area," and "Freedom-to-Operate Flag" is now "Potential Blocking IP to Discuss with Counsel."
+- **Updated assessment labels** — "FILE NOW" is now "LANDSCAPE FAVORS FILING" and similar labels updated throughout.
+- **Disclaimer footer on exports** — All HTML and Markdown exports now include an automatic disclaimer footer.
+- **CC BY-SA 4.0 prompt license** — Added LICENSE-PROMPTS file. Derivative works must retain all legal disclaimers.
+- **LEGAL_NOTICE.md** — Comprehensive legal notice added to the repository.
+- **Terms of Service updated** — Added Section 5.5 (AI Limitations).
 
 ---
 
@@ -244,4 +242,4 @@ dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=
 
 ---
 
-*Built with the Anthropic Claude API and Microsoft WebView2. Analysis quality depends on the model selected and the detail of your invention description. v1.1.0 — March 2026.*
+*Built with the Anthropic Claude API and Microsoft WebView2. Analysis quality depends on the model selected and the detail of your invention description. v1.2.0 — April 2026.*

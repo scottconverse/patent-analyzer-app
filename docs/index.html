@@ -295,7 +295,7 @@
 
 <header>
     <div class="container">
-        <div class="masthead">Open Source &middot; MIT License &middot; Windows Desktop &middot; v1.1.0</div>
+        <div class="masthead">Open Source &middot; MIT + CC BY-SA 4.0 &middot; Windows Desktop &middot; v1.2.0</div>
         <h1>Patent Analyzer</h1>
         <p class="subtitle">A free Windows app that turns your invention idea into a professional patent feasibility report</p>
     </div>
@@ -351,7 +351,7 @@
             <div class="feature-card">
                 <div class="feature-label">Stage 3</div>
                 <div class="feature-name">Patentability Analysis</div>
-                <div class="feature-desc">Full statutory analysis under &sect;101, &sect;102, &sect;103, and &sect;112. Risk ratings for each category plus an examiner rejection simulation.</div>
+                <div class="feature-desc">Full statutory analysis under &sect;101, &sect;102, &sect;103, and &sect;112. Risk ratings for each category plus common examiner concerns in this technology area.</div>
             </div>
             <div class="feature-card">
                 <div class="feature-label">Stage 4</div>
@@ -361,7 +361,7 @@
             <div class="feature-card">
                 <div class="feature-label">Stage 5</div>
                 <div class="feature-name">IP Strategy</div>
-                <div class="feature-desc">Filing recommendations, cost estimates, claim directions, trade secret boundaries, and a direct file-or-don't-file recommendation.</div>
+                <div class="feature-desc">Filing landscape assessment, cost estimates, claim directions, trade secret boundaries, and potential blocking IP to discuss with counsel.</div>
             </div>
             <div class="feature-card">
                 <div class="feature-label">Stage 6</div>
@@ -438,15 +438,15 @@
 
 <section class="section">
     <div class="container">
-        <h2>What's in v1.1.0</h2>
-        <p class="section-intro">Major reliability and security improvements.</p>
+        <h2>What's in v1.2.0</h2>
+        <p class="section-intro">UPL compliance revisions — all prompts now position the AI as a research assistant with proper disclaimers.</p>
         <ol class="steps">
-            <li><strong>WebView2 rendering</strong> &mdash; Replaced the legacy IE browser control with Microsoft Edge WebView2. Modern CSS, proper table rendering, no memory leaks.</li>
-            <li><strong>Encrypted API key</strong> &mdash; Your Anthropic API key is encrypted at rest using Windows DPAPI. Never stored in plaintext.</li>
-            <li><strong>Prompt audit fixes</strong> &mdash; All 7 reliability improvements from the prompt system audit ported to the embedded prompts: web search fallback, URL verification, legal caveats, cost date stamps, input threshold, and truncation safeguards.</li>
-            <li><strong>DPI awareness</strong> &mdash; Per-monitor DPI scaling. Crisp rendering on high-DPI displays.</li>
-            <li><strong>Graceful shutdown</strong> &mdash; Closing mid-analysis cancels the pipeline cleanly.</li>
-            <li><strong>Accessibility</strong> &mdash; Screen reader support via AutomationProperties on all controls.</li>
+            <li><strong>Research assistant positioning</strong> &mdash; All 6 embedded prompts now position the AI as an &ldquo;AI-powered research assistant&rdquo; with mandatory disclaimers on every stage output.</li>
+            <li><strong>Softened section titles</strong> &mdash; &ldquo;File or Don&rsquo;t File&rdquo; is now &ldquo;Filing Landscape Assessment,&rdquo; &ldquo;Examiner Rejection Simulation&rdquo; is now &ldquo;Common Examiner Concerns,&rdquo; and more.</li>
+            <li><strong>Updated assessment labels</strong> &mdash; &ldquo;FILE NOW&rdquo; is now &ldquo;LANDSCAPE FAVORS FILING&rdquo; and similar labels updated throughout all stages.</li>
+            <li><strong>Export disclaimers</strong> &mdash; Disclaimer footer automatically appended to all HTML and Markdown exports.</li>
+            <li><strong>Dual licensing</strong> &mdash; Added CC BY-SA 4.0 license for embedded prompt content. Derivative works must retain all legal disclaimers.</li>
+            <li><strong>Legal notice &amp; terms update</strong> &mdash; Added LEGAL_NOTICE.md and Section 5.5 (AI Limitations) to Terms of Service.</li>
         </ol>
     </div>
 </section>
@@ -455,7 +455,7 @@
     <div class="container">
         <div class="disclaimer">
             <strong>Legal Disclaimer</strong><br>
-            This tool provides strategic patent-analysis support, not legal advice. The analysis does not create an attorney-client relationship, does not constitute a formal patentability or freedom-to-operate opinion, and should not be relied upon as a substitute for engagement with a registered patent attorney. <strong>Always consult a registered patent attorney before filing.</strong>
+            This tool provides AI-powered patent research support, not legal advice. The analysis does not create an attorney-client relationship, does not constitute a formal patentability or freedom-to-operate opinion, and should not be relied upon as a substitute for engagement with a registered patent attorney. <strong>Always consult a registered patent attorney before filing.</strong>
         </div>
     </div>
 </section>
@@ -468,7 +468,7 @@
             <a href="https://github.com/scottconverse/patent-analyzer-prompts">Prompt System</a> &middot;
             <a href="https://github.com/scottconverse">More Projects</a>
         </p>
-        <p class="footer-license">MIT License &middot; Free to use, fork, adapt, and share &middot; <a href="terms.html">Terms &amp; Legal</a></p>
+        <p class="footer-license">MIT + CC BY-SA 4.0 &middot; Free to use, fork, adapt, and share &middot; <a href="terms.html">Terms &amp; Legal</a></p>
     </div>
 </footer>
 
