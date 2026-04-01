@@ -22,7 +22,7 @@ LIGHT_GRAY = HexColor("#e0e0e0")
 
 def build_pdf():
     doc = SimpleDocTemplate(
-        r"C:\Users\scott\Desktop\Claude\patent-attorney\PatentAnalyzer\PatentAnalyzer-README.pdf",
+        r"C:\Users\scott\OneDrive\Desktop\Claude\patent-analyzer-app\PatentAnalyzer-README.pdf",
         pagesize=letter,
         topMargin=0.75*inch,
         bottomMargin=0.75*inch,
@@ -110,7 +110,7 @@ def build_pdf():
     # ===== TITLE =====
     story.append(Spacer(1, 40))
     story.append(Paragraph("Patent Analyzer", title_style))
-    story.append(Paragraph("AI-Powered Patent Feasibility Analysis Tool for Inventors", subtitle_style))
+    story.append(Paragraph("AI-Powered Patent Feasibility Analysis Tool for Inventors \u2014 v1.2.0", subtitle_style))
     story.append(Paragraph(
         "A standalone Windows desktop application that takes an invention idea and runs a comprehensive "
         "6-stage patent analysis pipeline using the Anthropic Claude API. Produces a professional report "
@@ -130,9 +130,9 @@ def build_pdf():
         [
             ["1", "Technical Intake", "Restates your idea in precise patent-ready technical language"],
             ["2", "Prior Art Search", "Searches patents, papers, products, and GitHub for existing work (uses web search)"],
-            ["3", "Patentability Analysis", "Full \u00a7101/\u00a7102/\u00a7103/\u00a7112 analysis with examiner rejection simulation"],
+            ["3", "Patentability Analysis", "Full \u00a7101/\u00a7102/\u00a7103/\u00a7112 analysis with common examiner concerns in this technology area"],
             ["4", "Deep Dive Analysis", "Specialized deep analysis of the invention\u2019s most patentable and riskiest elements"],
-            ["5", "IP Strategy", "Filing recommendations, cost estimates, claim directions, trade secret boundaries"],
+            ["5", "IP Strategy", "Filing landscape assessment, cost estimates, claim directions, trade secret boundaries"],
             ["6", "Final Report", "Assembles everything into one comprehensive patent analysis report"],
         ],
         col_widths=[0.5*inch, 1.4*inch, 4.6*inch]
@@ -261,8 +261,8 @@ def build_pdf():
         "Technical restatement in patent-ready language",
         "Prior art search across patents, papers, products, and open source",
         "Full patentability assessment (\u00a7101, \u00a7102, \u00a7103, \u00a7112)",
-        "Examiner rejection simulation",
-        "Filing strategy (provisional vs. non-provisional, timing, costs)",
+        "Common examiner concerns analysis",
+        "Filing landscape assessment (provisional vs. non-provisional, timing, costs)",
         "Claim direction recommendations",
         "Documentation checklist",
     ]:
@@ -336,7 +336,8 @@ def build_pdf():
     # ===== LEGAL DISCLAIMER =====
     story.append(Paragraph("Legal Disclaimer", h1))
     story.append(Paragraph(
-        "This tool provides <b>strategic patent-analysis support</b>, not legal advice. The analysis:", body))
+        "This tool provides <b>AI-powered patent research support</b>, not legal advice. "
+        "The author of this tool is not a lawyer. The AI system that generates the analysis is not a lawyer. The analysis:", body))
     for item in [
         "Does <b>not</b> create an attorney-client relationship",
         "Does <b>not</b> constitute a formal patentability or freedom-to-operate opinion",
