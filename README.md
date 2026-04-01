@@ -1,22 +1,14 @@
 # Patent Analyzer
 
+> **This tool is NOT legal advice.** Patent Analyzer is an AI-powered research tool that helps inventors organize their thinking before consulting a patent attorney. It does not create an attorney-client relationship. The author is not a lawyer. Always consult a registered patent attorney before making filing decisions. See [LEGAL_NOTICE.md](LEGAL_NOTICE.md) and [Terms of Service](docs/terms.html) for full details.
+
+**License:** Application code: [MIT](LICENSE) | Prompt content: [CC BY-SA 4.0](LICENSE-PROMPTS) — derivative works must retain all legal disclaimers.
+
 **AI-Powered Patent Feasibility Analysis Tool for Inventors**
 
 **Version 1.1.0** — March 2026
 
 A standalone Windows desktop application that takes an invention idea and runs a comprehensive 6-stage patent analysis pipeline using the Anthropic Claude API. Produces a professional report covering prior art, patentability assessment, and IP strategy — with special depth on AI/ML and 3D printing inventions.
-
----
-
-> **IMPORTANT LEGAL DISCLAIMER**
->
-> **This tool does NOT provide legal advice. It is NOT a substitute for a registered patent attorney.** Patent decisions involve complex legal analysis that AI cannot reliably perform. Do not make filing decisions based solely on this tool's output.
->
-> The analysis produced by this software does not create an attorney-client relationship, does not constitute a formal patentability or freedom-to-operate opinion, and may contain errors, omissions, or hallucinated references. AI-generated patent analysis can be confidently wrong — presenting fabricated patent numbers, outdated case law, or incorrect statutory interpretations as fact.
->
-> **Always consult a registered patent attorney before making any filing, licensing, or enforcement decisions.**
->
-> By using this software, you accept full responsibility for any actions taken based on its output. See the [Terms of Service](docs/terms.html) for complete legal terms.
 
 ---
 
@@ -197,17 +189,6 @@ The HTML report is styled for professional presentation and printing.
 - **Prompt improvements** — All 7 reliability fixes from the prompt system audit ported to the embedded prompts (web search fallback, URL verification, legal caveats, cost date stamps, input threshold, truncation safeguards).
 
 ---
-
-## Legal Disclaimer
-
-This tool provides **strategic patent-analysis support**, not legal advice. The analysis:
-
-- Does **not** create an attorney-client relationship
-- Does **not** constitute a formal patentability or freedom-to-operate opinion
-- Should **not** be relied upon as a substitute for engagement with a registered patent attorney
-- Is intended to help inventors understand the patent landscape before investing in formal legal work
-
-**Always consult a registered patent attorney before filing.**
 
 ---
 
