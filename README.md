@@ -1,5 +1,13 @@
 # Patent Analyzer
 
+> ## This project has been superseded
+>
+> **Active development has moved to [scottconverse/patentforge](https://github.com/scottconverse/patentforge)**, which combines local (Ollama + Gemma 4, fully offline) and cloud (Anthropic Claude API) modes in one cross-platform desktop app — plus 3-agent claim drafting and 5-agent application generation that this repo never shipped.
+>
+> This repo (patent-analyzer-app, WPF / Windows-only, last release v1.2.0 on 2026-04-17) is preserved as historical reference and **archived** as of 2026-05-19. No further maintenance, security patches, or model migrations will land here. If you forked or starred this project, please switch to [patentforge](https://github.com/scottconverse/patentforge) for ongoing work.
+
+---
+
 > **This tool is NOT legal advice.** Patent Analyzer is an AI-powered research tool that helps inventors organize their thinking before consulting a patent attorney. It does not create an attorney-client relationship. The author is not a lawyer. Always consult a registered patent attorney before making filing decisions. See [LEGAL_NOTICE.md](LEGAL_NOTICE.md) and [Terms of Service](docs/terms.html) for full details.
 
 **License:** Application code: [MIT](LICENSE) | Prompt content: [CC BY-SA 4.0](LICENSE-PROMPTS) — derivative works must retain all legal disclaimers.
